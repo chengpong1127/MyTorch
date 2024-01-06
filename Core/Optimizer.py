@@ -1,22 +1,20 @@
 import numpy as np
 
 class Optimizer:
-    def __init__(self) -> None:
-        pass
+    def __init__(self, parameters) -> None:
+        self.parameters = parameters
     
     def step(self):
         raise NotImplementedError
     
     def zero_grad(self):
-        raise NotImplementedError
-    
-    
+        for p in self.parameters:
+            p.grad = None
     
     
 class SGD(Optimizer):
     def __init__(self, parameters, lr=0.001) -> None:
-        super().__init__()
-        self.parameters = parameters
+        super().__init__(parameters)
         self.lr = lr
     
     def step(self):
@@ -28,6 +26,4 @@ class SGD(Optimizer):
                 
             p.data -= self.lr * grad
     
-    def zero_grad(self):
-        for p in self.parameters:
-            p.grad = None
+    

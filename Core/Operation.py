@@ -79,9 +79,28 @@ class MatMul(Operation):
         self.input[1].backward(np.matmul(self.input[0].data.T, grad.data))
         
 class Softmax(Operation):
+    def __init__(self, dim: int):
+        super().__init__()
+        self.dim = dim
     def forward(self, x):
-        e_x = np.exp(x.data - np.max(x.data, axis=1, keepdims=True))
-        return t.Tensor(e_x / np.sum(e_x, axis=1, keepdims=True))
+        e_x = np.exp(x.data - np.max(x.data, axis=self.dim, keepdims=True))
+        return t.Tensor(e_x / np.sum(e_x, axis=self.dim, keepdims=True))
     
     def backward(self, grad):
         self.input[0].backward(grad.data * self.output.data * (1 - self.output.data))
+        
+class Flatten(Operation):
+    """_summary_
+    Flatten the input tensor to a 2D tensor. The first dimension is the batch size. The second dimension is the product of the rest dimensions.
+
+    Args:
+        Operation (_type_): _description_
+    """
+    def __init__(self):
+        super().__init__()
+        
+    def forward(self, x):
+        return t.Tensor(x.data.reshape(x.shape[0], -1))
+    
+    def backward(self, grad):
+        self.input[0].backward(grad.data.reshape(self.input[0].shape))

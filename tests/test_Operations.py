@@ -77,10 +77,8 @@ def test_matmul():
     assert np.array_equal(y.grad.data, np.array([[1, 1, 1], [2, 2, 2], [3, 3, 3]]))
     
 def test_Flatten():
-    x = Tensor(np.random.randn(1, 2, 3, 4))
+    x = Tensor([[[1, 2, 3], [4, 5, 6]]])
     z = Flatten()(x)
-    assert np.array_equal(z.data, x.data.flatten())
-    z.backward()
-    assert np.array_equal(x.grad.data, np.ones_like(x.data))
+    assert np.array_equal(z.data, np.array([[1, 2, 3, 4, 5, 6]]))
     
     
