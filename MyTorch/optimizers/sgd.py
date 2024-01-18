@@ -1,18 +1,7 @@
+from .base_optimizer import BaseOptimizer
 import numpy as np
-
-class Optimizer:
-    def __init__(self, parameters) -> None:
-        self.parameters = parameters
     
-    def step(self):
-        raise NotImplementedError
-    
-    def zero_grad(self):
-        for p in self.parameters:
-            p.grad = None
-    
-    
-class SGD(Optimizer):
+class SGD(BaseOptimizer):
     def __init__(self, parameters, lr=0.001) -> None:
         super().__init__(parameters)
         self.lr = lr
