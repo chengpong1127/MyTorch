@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 
 class Module(ABC):
     def __init__(self):
-        pass
+        self.training = True
         
     @abstractmethod
     def forward(self, *args):
@@ -30,6 +30,16 @@ class Model(Module):
             params += submodel.get_parameters()
         params += self_parameters
         return params
+    
+    def train(self):
+        self.training = True
+        for submodel in [m for m in self.__dict__.values() if isinstance(m, Model)]:
+            submodel.train()
+            
+    def eval(self):
+        self.training = False
+        for submodel in [m for m in self.__dict__.values() if isinstance(m, Model)]:
+            submodel.eval()
 
 
 class Operation(Module):
