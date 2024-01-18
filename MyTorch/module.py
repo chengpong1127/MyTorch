@@ -1,41 +1,48 @@
 from .tensor import Tensor
 from .parameter import Parameter
+from abc import ABC, abstractmethod
 
-class Module:
+class Module(ABC):
     def __init__(self):
         pass
         
+    @abstractmethod
     def forward(self, *args):
-        raise NotImplementedError
+        pass
     
     
 class Model(Module):
     def __init__(self):
         pass
+    
     def __call__(self, *args):
         return self.forward(*args)
     
+    @abstractmethod
     def forward(self, *args):
-        raise NotImplementedError
+        pass
     
     def get_parameters(self):
-        submodels = [ m for m in self.__dict__.values() if isinstance(m, Model) ]
-        self_parameters = [ p for p in self.__dict__.values() if isinstance(p, Parameter) ]
+        submodels = [m for m in self.__dict__.values() if isinstance(m, Model)]
+        self_parameters = [p for p in self.__dict__.values() if isinstance(p, Parameter)]
         params = []
         for submodel in submodels:
             params += submodel.get_parameters()
         params += self_parameters
         return params
 
+
 class Operation(Module):
     def __init__(self):
         super().__init__()
     
+    @abstractmethod
     def forward(self, *args):
-        raise NotImplementedError
+        pass
     
+    @abstractmethod
     def backward(self, *args):
-        raise NotImplementedError
+        pass
     
     def __call__(self, *args):
         tensor_args = []

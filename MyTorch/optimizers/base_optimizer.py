@@ -1,10 +1,12 @@
+from abc import ABC, abstractmethod
 
-class BaseOptimizer:
+class BaseOptimizer(ABC):
     def __init__(self, parameters) -> None:
         self.parameters = parameters
     
+    @abstractmethod
     def step(self):
-        raise NotImplementedError
+        pass
     
     def zero_grad(self):
         for p in self.parameters:
