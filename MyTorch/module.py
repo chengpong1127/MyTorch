@@ -8,7 +8,7 @@ class Module(ABC):
         self.training = True
         
     @abstractmethod
-    def forward(self, *args):
+    def forward(self, *args) -> Tensor:
         pass
     
     
@@ -16,14 +16,14 @@ class Model(Module):
     def __init__(self):
         super().__init__()
     
-    def __call__(self, *args):
+    def __call__(self, *args) -> Tensor:
         return self.forward(*args)
     
     @abstractmethod
-    def forward(self, *args):
+    def forward(self, *args) -> Tensor:
         pass
     
-    def get_parameters(self):
+    def get_parameters(self) -> list:
         submodels = [m for m in self.__dict__.values() if isinstance(m, Model)]
         self_parameters = [p for p in self.__dict__.values() if isinstance(p, Parameter)]
         params = []
@@ -61,14 +61,14 @@ class Operation(Module):
         super().__init__()
     
     @abstractmethod
-    def forward(self, *args):
+    def forward(self, *args) -> Tensor:
         pass
     
     @abstractmethod
     def backward(self, *args):
         pass
     
-    def __call__(self, *args):
+    def __call__(self, *args) -> Tensor:
         tensor_args = []
         for arg in args:
             if isinstance(arg, Tensor):
