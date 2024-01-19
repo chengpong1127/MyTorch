@@ -41,6 +41,19 @@ class Model(Module):
         self.training = False
         for submodel in [m for m in self.__dict__.values() if isinstance(m, Model)]:
             submodel.eval()
+            
+    def save(self, path):
+        params = self.get_parameters()
+        np.savez(path, *[p.data for p in params])
+        
+    def load(self, path):
+        params = self.get_parameters()
+        npzfile = np.load(path)
+        arrays = [npzfile[key] for key in npzfile.files]
+        for p, d in zip(params, arrays):
+            if p.data.shape != d.shape:
+                raise Exception('Shape mismatch: {} vs {}'.format(p.data.shape, d.shape))
+            p.data = d
 
 
 class Operation(Module):
