@@ -3,15 +3,23 @@ import numpy as np
 
 class Tensor:
     def __init__(self, data, requires_grad=True):
-        from .module import Module
+        from .module import Operation
         self.data = np.array(data, dtype=np.float32)
         self.grad: Tensor = None
-        self.grad_fn: Module = None
+        self.grad_fn: Operation = None
         self.requires_grad = requires_grad
         
     @property
     def shape(self):
         return self.data.shape
+    
+    def reshape(self, *shape):
+        from .operations import Reshape
+        return Reshape(*shape)(self)
+    
+    def transpose(self, *dims):
+        from .operations import Transpose
+        return Transpose(dims)(self)
         
     def __add__(self, other):
         from .operations import Add
@@ -39,7 +47,7 @@ class Tensor:
         return MatMul()(self, other)
         
     def backward(self, grad=None):
-        from .module import Module
+        from .module import Operation
         if not self.requires_grad:
             return
         if grad is None:
@@ -52,7 +60,7 @@ class Tensor:
             self.grad = grad
         else:
             self.grad += grad
-        if issubclass(type(self.grad_fn), Module):
+        if issubclass(type(self.grad_fn), Operation):
             self.grad_fn.backward(grad)
                 
     def __str__(self):

@@ -17,7 +17,7 @@ class Sigmoid(Operation):
         self.input[0].backward(grad.data * self.output.data * (1 - self.output.data))
         
 class Softmax(Operation):
-    def __init__(self, dim: int):
+    def __init__(self, dim = 1):
         super().__init__()
         self.dim = dim
     def forward(self, x):

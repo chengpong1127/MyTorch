@@ -1,7 +1,13 @@
 from .linear import Linear
 from .dropout import Dropout
+from .attention import Attention, MultiheadAttention
+from .norms import LayerNorm, BatchNorm
 
 __all__ = [
     'Linear',
-    'Dropout'
+    'Dropout',
+    'Attention',
+    'MultiheadAttention',
+    'LayerNorm',
+    'BatchNorm',
 ]

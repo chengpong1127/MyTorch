@@ -1,5 +1,6 @@
 from .tensor import Tensor
 from .parameter import Parameter
+import numpy as np
 from abc import ABC, abstractmethod
 
 class Module(ABC):
@@ -13,7 +14,7 @@ class Module(ABC):
     
 class Model(Module):
     def __init__(self):
-        pass
+        super().__init__()
     
     def __call__(self, *args):
         return self.forward(*args)
@@ -64,4 +65,6 @@ class Operation(Module):
         self.input = tensor_args
         self.output = self.forward(*self.input)
         self.output.grad_fn = self
+        if np.isnan(self.output.data).any():
+            raise Exception('Output have nan')
         return self.output
