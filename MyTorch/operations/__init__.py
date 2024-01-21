@@ -1,4 +1,4 @@
-from .basic_operations import Add, Mul, Pow, MatMul, Log, Flatten, Reshape, Transpose
+from .basic_operations import Add, Mul, Pow, MatMul, Log, Flatten, Reshape, Transpose, Index
 
 __all__ = [
     'Add',
@@ -8,5 +8,6 @@ __all__ = [
     'Log',
     'Flatten',
     'Reshape',
-    'Transpose'
+    'Transpose',
+    'Index'
 ]

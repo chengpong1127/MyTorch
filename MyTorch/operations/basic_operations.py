@@ -76,3 +76,13 @@ class Transpose(Operation):
     
     def backward(self, grad):
         self.input[0].backward(grad.data.transpose(self.axes))
+        
+class Index(Operation):
+    def __init__(self):
+        super().__init__()
+        
+    def forward(self, x, index):
+        return Tensor(x.data[index.data.astype(np.int64)])
+    
+    def backward(self, grad):
+        self.input[0].backward(grad.data)

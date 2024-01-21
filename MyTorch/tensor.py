@@ -45,6 +45,10 @@ class Tensor:
     def __matmul__(self, other):
         from .operations import MatMul
         return MatMul()(self, other)
+    
+    def __getitem__(self, index):
+        from .operations import Index
+        return Index()(self, index)
         
     def backward(self, grad=None):
         from .module import Operation
