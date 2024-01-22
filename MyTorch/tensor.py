@@ -20,6 +20,10 @@ class Tensor:
     def transpose(self, *dims):
         from .operations import Transpose
         return Transpose(dims)(self)
+    
+    def pad(self, pad_width):
+        from .operations import Pad
+        return Pad(pad_width)(self)
         
     def __add__(self, other):
         from .operations import Add
@@ -48,7 +52,7 @@ class Tensor:
     
     def __getitem__(self, index):
         from .operations import Index
-        return Index()(self, index)
+        return Index(index)(self)
         
     def backward(self, grad=None):
         from .module import Operation

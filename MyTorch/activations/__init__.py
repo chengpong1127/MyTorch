@@ -1,7 +1,8 @@
-from .activation import ReLU, Sigmoid, Softmax
+from .activation import ReLU, Sigmoid, Softmax, GeLU
 
 __all__ = [
     'ReLU',
     'Sigmoid',
-    'Softmax'
+    'Softmax',
+    'GeLU'
 ]

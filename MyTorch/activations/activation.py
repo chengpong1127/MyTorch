@@ -26,3 +26,10 @@ class Softmax(Operation):
     
     def backward(self, grad):
         self.input[0].backward(grad.data * self.output.data * (1 - self.output.data))
+        
+class GeLU(Operation):
+    def forward(self, x):
+        return Tensor(0.5 * x.data * (1 + np.tanh(np.sqrt(2 / np.pi) * (x.data + 0.044715 * (x.data ** 3)))))
+    
+    def backward(self, grad):
+        self.input[0].backward(grad.data * (0.5 * (1 + np.tanh(np.sqrt(2 / np.pi) * (self.input[0].data + 0.044715 * (self.input[0].data ** 3)))) + (0.0535161 * (self.input[0].data ** 2) + 0.398942 * self.input[0].data) * (1 / np.cosh(np.sqrt(2 / np.pi) * (self.input[0].data + 0.044715 * (self.input[0].data ** 3)))) ** 2))

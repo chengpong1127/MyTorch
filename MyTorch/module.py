@@ -16,8 +16,8 @@ class Model(Module):
     def __init__(self):
         super().__init__()
     
-    def __call__(self, *args) -> Tensor:
-        return self.forward(*args)
+    def __call__(self, *args, **kargs) -> Tensor:
+        return self.forward(*args, **kargs)
     
     @abstractmethod
     def forward(self, *args) -> Tensor:

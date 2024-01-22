@@ -78,11 +78,30 @@ class Transpose(Operation):
         self.input[0].backward(grad.data.transpose(self.axes))
         
 class Index(Operation):
-    def __init__(self):
+    def __init__(self, index):
         super().__init__()
+        if isinstance(index, int) or isinstance(index, slice) or isinstance(index, list) or isinstance(index, tuple):
+            self.index = index
+        elif issubclass(type(index), Tensor):
+            self.index = index.data.astype(int)
+        else:
+            raise Exception('Invalid index type')
         
-    def forward(self, x, index):
-        return Tensor(x.data[index.data.astype(np.int64)])
+    def forward(self, x):
+        return Tensor(x.data[self.index])
+    
+    def backward(self, grad):
+        _grad = np.zeros_like(self.input[0].data)
+        _grad[self.index] = grad.data
+        self.input[0].backward(_grad)
+        
+class Pad(Operation):
+    def __init__(self, pad_width):
+        super().__init__()
+        self.pad_width = pad_width
+        
+    def forward(self, x):
+        return Tensor(np.pad(x.data, self.pad_width))
     
     def backward(self, grad):
         self.input[0].backward(grad.data)
