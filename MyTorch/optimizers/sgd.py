@@ -9,9 +9,11 @@ class SGD(BaseOptimizer):
     def step(self):
         for p in self.parameters:
             grad = p.grad.data
-            if grad.shape[0] != p.shape[0]:
+            while(len(grad.shape) > len(p.shape)):
+                grad = grad.sum(axis=0)
+                
+            if grad.shape[0] != p.shape[0] and p.shape[0] == 1:
                 grad = grad.mean(axis=0)
-                grad = grad[np.newaxis, :]
                 
             p.data -= self.lr * grad
     

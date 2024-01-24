@@ -92,7 +92,10 @@ class Index(Operation):
     
     def backward(self, grad):
         _grad = np.zeros_like(self.input[0].data)
-        _grad[self.index] = grad.data
+        grad_data = grad.data
+        if len(grad_data.shape) > len(self.input[0].shape):
+            grad_data = np.mean(grad_data, axis=tuple(range(len(grad_data.shape) - len(self.input[0].shape))))
+        _grad[self.index] = grad_data
         self.input[0].backward(_grad)
         
 class Pad(Operation):

@@ -77,6 +77,14 @@ class Operation(Module):
                 tensor_args.append(Tensor(arg, requires_grad=False))
         self.input = tensor_args
         self.output = self.forward(*self.input)
+        if not isinstance(self.output, Tensor):
+            self.output = Tensor(self.output, requires_grad=False)
+        has_grad_input = False
+        for arg in self.input:
+            if arg.requires_grad:
+                has_grad_input = True
+                break
+        self.output.requires_grad = has_grad_input
         self.output.grad_fn = self
         if np.isnan(self.output.data).any():
             raise Exception('Output have nan')

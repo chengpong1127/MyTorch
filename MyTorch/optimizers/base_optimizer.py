@@ -10,5 +10,6 @@ class BaseOptimizer(ABC):
     
     def zero_grad(self):
         for p in self.parameters:
+            del p.grad
             p.grad = None
     

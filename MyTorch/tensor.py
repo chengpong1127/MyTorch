@@ -64,10 +64,10 @@ class Tensor:
         if not isinstance(grad, Tensor):
             grad = Tensor(grad)
         
-        if self.grad is None:
-            self.grad = grad
-        else:
-            self.grad += grad
+        if self.grad != None:
+            del self.grad
+            self.grad = None
+        self.grad = grad
         if issubclass(type(self.grad_fn), Operation):
             self.grad_fn.backward(grad)
                 

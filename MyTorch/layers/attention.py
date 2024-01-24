@@ -67,6 +67,7 @@ class MultiheadAttention(Model):
         # scaled_attention_logits: (batch_size, num_heads, seq_len, seq_len)
         if mask != None:
             # mask: (batch_size, seq_len)
+            mask.requires_grad = False
             _mask = mask.reshape(mask.shape[0], 1, 1, -1)
             _inverse_mask = _mask * -1 + 1
             scaled_attention_logits = scaled_attention_logits + (_inverse_mask * -1e9)
