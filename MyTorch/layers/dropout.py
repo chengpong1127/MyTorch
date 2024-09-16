@@ -1,4 +1,4 @@
-from MyTorch import Model, Parameter
+from mytorch import Model
 import numpy as np
 
 

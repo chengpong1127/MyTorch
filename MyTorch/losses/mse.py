@@ -1,5 +1,5 @@
 from .base_loss import Loss
-from MyTorch import Tensor
+from mytorch import Tensor
 import numpy as np
 
 class MSE(Loss):

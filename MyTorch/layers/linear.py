@@ -1,7 +1,6 @@
-from MyTorch import Model, Parameter
+from mytorch import Model, Parameter
 import numpy as np
-from MyTorch.operations import MatMul
-from MyTorch import Parameter
+from mytorch.operations import MatMul
 
 class Linear(Model):
     def __init__(self, input_dim, output_dim):

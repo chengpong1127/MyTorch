@@ -1,4 +1,4 @@
-from MyTorch import Tensor, Operation
+from mytorch import Tensor, Operation
 import numpy as np
     
 class Add(Operation):

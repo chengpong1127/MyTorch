@@ -1,4 +1,4 @@
-from MyTorch import Model, Tensor
+from mytorch import Model, Tensor
 from . import Linear, Dropout
 from ..activations import Softmax
 import numpy as np

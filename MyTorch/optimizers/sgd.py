@@ -1,5 +1,4 @@
 from .base_optimizer import BaseOptimizer
-import numpy as np
     
 class SGD(BaseOptimizer):
     def __init__(self, parameters, lr=0.001) -> None:

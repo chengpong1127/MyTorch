@@ -1,4 +1,4 @@
-from MyTorch import Model, Parameter, Tensor
+from mytorch import Model, Parameter, Tensor
 import numpy as np
 
 class Embedding(Model):

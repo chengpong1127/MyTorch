@@ -1,4 +1,4 @@
-from MyTorch import Operation
+from mytorch import Operation
 from abc import abstractmethod
 
 class Loss(Operation):

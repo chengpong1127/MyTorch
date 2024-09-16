@@ -1,7 +1,5 @@
-from MyTorch import Model, Parameter
+from mytorch import Model, Parameter
 import numpy as np
-from MyTorch.operations import MatMul
-from MyTorch import Parameter
 
 class LayerNorm(Model):
     def __init__(self, input_dim, eps=1e-5):

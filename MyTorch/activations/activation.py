@@ -1,5 +1,5 @@
-from MyTorch import Operation
-from MyTorch import Tensor
+from mytorch import Operation
+from mytorch import Tensor
 import numpy as np
 
 class ReLU(Operation):
